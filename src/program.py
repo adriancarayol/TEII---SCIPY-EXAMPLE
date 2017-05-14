@@ -35,7 +35,7 @@ def process_2(lista):
 
 def main():
     try:
-        size = int(input("Introduce el tamaño de la lista: "))
+        size = int(input("Introduce el tamaño de la lista (cambiando linea...): "))
     except ValueError:
         size = random.randint(1, 10000)
         print('No has introducido un número, el tamaño de la lista será de: {0}'.format(size))
