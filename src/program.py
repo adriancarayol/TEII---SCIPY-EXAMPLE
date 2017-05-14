@@ -1,6 +1,7 @@
 import random
 import time
 import multiprocessing
+import numpy as np
 import matplotlib.pyplot as plt
 from src.algoritmos_ordenacion import Algoritmos
 
@@ -14,7 +15,10 @@ def process_1(lista, q):
     print("Empezando: %s \n" % multiprocessing.current_process().name)
     Algoritmos.minimos_sucesivos(lista)
     end = time.time()
-    q.put({'1': end - start})
+    q.put({
+        'time': end - start,
+        'algoritmo': 1,
+    })
     print("Finalizado: %s en %f \n" % (multiprocessing.current_process().name, end - start))
     print(lista)
 
@@ -28,7 +32,10 @@ def process_2(lista, q):
     start = time.time()
     Algoritmos.insertion_sort(lista)
     end = time.time()
-    q.put({'2': end - start})
+    q.put({
+        'time': end - start,
+        'algoritmo': 2,
+    })
     print("Finalizado: %s en %f \n" % (multiprocessing.current_process().name, end - start))
     print(lista)
 
@@ -38,7 +45,10 @@ def process_3(lista, q):
     start = time.time()
     lista = sorted(lista)
     end = time.time()
-    q.put({'3': end - start})
+    q.put({
+        'time': end - start,
+        'algoritmo': 3,
+    })
     print("Finalizado: %s en %f \n" % (multiprocessing.current_process().name, end - start))
     print(lista)
 
@@ -76,13 +86,22 @@ def main():
     p2.join()
     p3.join()
 
-    print(queue.get(1))
-    print(queue.get(2))
-    print(queue.get(3))
-    
-    plt.plot([1, 2, 3, 4], [1, 4, 9, 16], 'ro')
-    plt.axis([0, 6, 0, 20])
-    plt.show()
+    times = []
+    times.append(queue.get())
+    times.append(queue.get())
+    times.append(queue.get())
+    times = sorted(times, key=lambda k: k['algoritmo'])  # Ordenamos la lista por algoritmo
+
+    x = np.array([1, 9, 18])  # Eje x
+    y = np.array([times[0]['time'], times[1]['time'], times[2]['time']])  # Eje y
+    my_xticks = ['Minimos sucesivos', 'Ordenacion por seleccion', 'Ordenacion por Timsort']  # Nombres de los algoritmos
+    plt.xticks(x, my_xticks)  # Asociamos nombres de algoritmos a eje x
+
+    plt.plot(x, y)  # Creamos el grafico
+    plt.xlabel('Algoritmo')  # Titulo del eje x
+    plt.ylabel('Tiempo (segundos)')  # Titulo del eje y
+
+    plt.show()  # Mostramos el grafico
 
 
 if __name__ == "__main__":
