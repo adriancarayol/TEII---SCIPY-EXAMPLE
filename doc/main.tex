@@ -80,26 +80,28 @@
 	
 	\underline{La lista se rellenará automáticamente con números aleatorios}, y se usará la misma lista para los tres algoritmos.\\
 	
-	Finalmente, lanzaremos tres procesos en paralelo (uno con cada algoritmo de ordenación) y se compararán los tiempos de cada uno, y se mostrará por pantalla las listas ordenadas.\\
+	Finalmente, lanzaremos tres procesos en paralelo (uno con cada algoritmo de ordenación) y se compararán los tiempos de cada uno, y se mostrará por pantalla las listas ordenadas, junto con un gráfico comparativo de los tres algoritmos.\\
 	
-	Para llevar un control de las versiones del programa, y poder tener acceso al programa desde cualquier sitio, usaremos \textbf{Git} junto con \textbf{GitHub}.
+	Para llevar un control de las versiones del programa, y poder tener acceso al programa desde cualquier sitio, usaremos \textbf{Git} junto con \textbf{GitHub}.\\
 	
-	% AQUI SE HABLA DE LOS ALGORITMOS UTILIZADOS...
+	Además de esto, he trabajado con \textbf{Jupyter}, por lo que también se adjunta un fichero llamado Untitle.tex y Untitle.pdf con el código Python generado con Jupyter.
+	
+	%-- AQUI SE HABLA DE LOS ALGORITMOS UTILIZADOS...
 	\section{Algoritmos utilizados.}
 	En concreto, los algoritmos utilizados son siguientes:
 	\begin{itemize}
 		\item \textbf{Ordenación por selección} (mínimos sucesivos).
-			\subitem El código está inspirado en el libro \cite{bibid}Python Fácil. \\\\ $\bullet$ Es un doble bucle anidado, en el que se compara el primer número con todos los demás, y si alguno es menor, los intercambia de posición, luego se repite la misma operación con el segundo etcétera.
+			\subitem El código está inspirado en el libro Python Fácil \cite{python_facil}. \\\\ $\bullet$ Es un doble bucle anidado, en el que se compara el primer número con todos los demás, y si alguno es menor, los intercambia de posición, luego se repite la misma operación con el segundo etcétera.
 		\item \textbf{Ordenación por inserción}.
-			\subitem El código está inspirado en el libro \cite{bibid}Python Fácil. \\\\ $\bullet$ Este algoritmo, tiene un orden de ejecución de: $O(n^{2})$, además de ser inestable, es decir, puede que algún número no quede ordenado. Consiste en insertar un elemento de la lista en la parte $"$izquierda$"$ de la misma (los menores se desplazan a la izquierda), se repite este proceso desde el segundo hasta el último elemento de la lista.
+			\subitem El código está inspirado en el libro Python Fácil \cite{python_facil}. \\\\ $\bullet$ Este algoritmo, tiene un orden de ejecución de: $O(n^{2})$, además de ser inestable, es decir, puede que algún número no quede ordenado. Consiste en insertar un elemento de la lista en la parte $"$izquierda$"$ de la misma (los menores se desplazan a la izquierda), se repite este proceso desde el segundo hasta el último elemento de la lista.
 		\item \textbf{Ordenación Timsort}.
-			\subitem El código está implementado por los desarrolladores de Python.\\\\ $\bullet$ Timsort es un algoritmo de clasificación estable (ordena siempre bien las listas) híbrido, derivado de la ordenación por ordenación y clasificación por inserción, diseñado para funcionar bien en muchos tipos de datos del mundo real
+			\subitem El código está implementado por los desarrolladores de Python \cite{manual}.\\\\ $\bullet$ Timsort es un algoritmo de clasificación estable (ordena siempre bien las listas) híbrido, derivado de la ordenación por ordenación y clasificación por inserción, diseñado para funcionar bien en muchos tipos de datos del mundo real
 	\end{itemize}
 	
 	
 	\section{Comparación de algoritmos}
 	
-	
+
 	A continuación, se muestra una tabla comparativa con los tiempos de ejecución de los 3 algoritmos, con diferentes tamaños de lista. (tabla \ref{tab:tab1}):
 	
 	\begin{table}[h]
@@ -119,7 +121,17 @@
 	\end{table}
 	Como podemos observar, vemos que, el que mejor se comporta para todos los tamaños es el algoritmo de ordenación Timsort, además, el algoritmo de ordenación por selección, ha fallado en la ordenación de 200 elementos, ya que ha dejado un número sin ordenar.\\
 	
-	También podemos observar, que, conforme crece el tamaño de la lista, el algoritmo que menos perjudicado se ve es el de Timsort, por ello se usa en la vida real para trabajar con grandes cantidades de datos de una forma eficiente.
+	También podemos observar, que, conforme crece el tamaño de la lista, el algoritmo que menos perjudicado se ve es el de Timsort, por ello se usa en la vida real para trabajar con grandes cantidades de datos de una forma eficiente.\\
+	
+	Los \textbf{ordenes de complejidad} de los algoritmos son los siguientes:
+	\begin{itemize}
+		\item Mínimos sucesivos
+			\subitem $O(n^{2})$
+		\item Ordenación por selección:
+			\subitem $O(n^{2})$
+		\item Ordenación por Timsort:
+			\subitem $O(n\log{n})$
+	\end{itemize}
 	
 	\section{Listados de código}
 	A continuación, el código del programa, que está dividido en dos ficheros, uno con el módulo de los algoritmos y otro, con el programa principal.
@@ -141,7 +153,24 @@
 	\end{itemize}
 	
 	A continuación, se muestra los distintos cambios realizados en el repositorio, utilizando la herramienta \textbf{UpSource}.
-		
+			\begin{figure}[t]
+				\begin{center}
+					\includegraphics[scale=0.7, width=180mm]{pic3.png}
+					\caption{Upsource para control del repositorio (1/2).}
+				\end{center}
+			\end{figure}
+			\FloatBarrier
+			
+			
+			\begin{figure}[t]
+				\begin{center}
+					\includegraphics[scale=0.7, width=180mm]{pic4.png}
+					\caption{Upsource para control del repositorio (2/2).}
+				\end{center}
+			\end{figure}
+			\FloatBarrier
+					
+	Para el desarrollo del código en Python, he utilizado \href{https://www.jetbrains.com/pycharm/}{\colorbox{cyan}{PyCharm}}, que proporciona un entorno de desarrollo bastante completo, además, es de la misma compañía que UpSource.
 	\section{Manual de uso.}
 	
 	
@@ -180,11 +209,8 @@
 	
 	Finalmente, \textbf{Python}, me parece un lenguaje muy interesante y con una sintaxis sencilla, que, junto a sus cientos de módulos, te permite programar de una manera muy rápida.
 	
-	\bibliographystyle{unsrt}   % this means that the order of references
-	% is dtermined by the order in which the
-	% \cite and \nocite commands appear
-	\bibliography{referencias}  % list here all the bibliographies that
-	% you need. 
+	\bibliographystyle{plain}  
+	\bibliography{main-blx}
 	
 \end{document}
 
