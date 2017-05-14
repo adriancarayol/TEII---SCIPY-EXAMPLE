@@ -3,7 +3,7 @@ import time
 import multiprocessing
 import numpy as np
 import matplotlib.pyplot as plt
-from src.algoritmos_ordenacion import Algoritmos
+from algoritmos_ordenacion import Algoritmos
 
 
 def process_1(lista, q):

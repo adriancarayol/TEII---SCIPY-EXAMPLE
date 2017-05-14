@@ -1,0 +1,470 @@
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Python con Jupyter}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Ejemplo de Python con Jupyter}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{class} \PY{n+nc}{Algoritmos}\PY{p}{(}\PY{n+nb}{object}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Clase que contiene los siguientes algoritmos de ordenacion}
+        \PY{l+s+sd}{        \PYZhy{} Ordenamiento por seleccion}
+        \PY{l+s+sd}{        \PYZhy{} Ordenamiento por insercion}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+        
+            \PY{n+nd}{@staticmethod}
+            \PY{k}{def} \PY{n+nf}{minimos\PYZus{}sucesivos}\PY{p}{(}\PY{n}{lista}\PY{p}{)}\PY{p}{:}
+                \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{        Ordena una lista de números}
+        \PY{l+s+sd}{        por el algoritmo minimos sucesivos.}
+        \PY{l+s+sd}{        Ordenamiento por selección (Selection Sort en inglés).}
+        \PY{l+s+sd}{        :param lista: Lista con los números a ordenar}
+        \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{lista}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{lista}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                        \PY{k}{if} \PY{n}{lista}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{lista}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{:}
+                            \PY{n}{aux} \PY{o}{=} \PY{n}{lista}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                            \PY{n}{lista}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{lista}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+                            \PY{n}{lista}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{aux}
+        
+            \PY{n+nd}{@staticmethod}
+            \PY{k}{def} \PY{n+nf}{insertion\PYZus{}sort}\PY{p}{(}\PY{n}{lista}\PY{p}{)}\PY{p}{:}
+                \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{        Ordena una lista de números}
+        \PY{l+s+sd}{        por el algoritmo ordenamiento por inserción}
+        \PY{l+s+sd}{        (InsertionSort en inglés)}
+        \PY{l+s+sd}{        :param lista: Lista con los números a ordenar}
+        \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{lista}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{Algoritmos}\PY{o}{.}\PY{n}{\PYZus{}\PYZus{}inserta}\PY{p}{(}\PY{n}{lista}\PY{p}{,} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{lista}\PY{p}{[}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        
+            \PY{n+nd}{@staticmethod}
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}inserta}\PY{p}{(}\PY{n}{lista}\PY{p}{,} \PY{n}{k}\PY{p}{,} \PY{n}{v}\PY{p}{)}\PY{p}{:}
+                \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{        Metodo auxiliar para el algoritmo de ordenacion}
+        \PY{l+s+sd}{        insertion\PYZus{}osrt}
+        \PY{l+s+sd}{        :param lista: Lista con los números a ordenar}
+        \PY{l+s+sd}{        :param k: Posición del siguiente elemento de la lista}
+        \PY{l+s+sd}{        :param v: Siguiente elemento de la lista}
+        \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{if} \PY{n}{lista}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{v}\PY{p}{:}
+                        \PY{n}{lista}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{n}{k}\PY{p}{)}
+                        \PY{n}{lista}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{v}\PY{p}{)}
+                        \PY{k}{return}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k+kn}{import} \PY{n+nn}{random}
+        \PY{k+kn}{import} \PY{n+nn}{time}
+        \PY{k+kn}{import} \PY{n+nn}{multiprocessing}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{src}\PY{n+nn}{.}\PY{n+nn}{algoritmos\PYZus{}ordenacion} \PY{k}{import} \PY{n}{Algoritmos}
+        
+        
+        \PY{k}{def} \PY{n+nf}{process\PYZus{}1}\PY{p}{(}\PY{n}{lista}\PY{p}{,} \PY{n}{q}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Funcion para el proceso 1}
+        \PY{l+s+sd}{    :param lista: Lista de números a ordenar}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{start} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Empezando: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{multiprocessing}\PY{o}{.}\PY{n}{current\PYZus{}process}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{name}\PY{p}{)}
+            \PY{n}{Algoritmos}\PY{o}{.}\PY{n}{minimos\PYZus{}sucesivos}\PY{p}{(}\PY{n}{lista}\PY{p}{)}
+            \PY{n}{end} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+            \PY{n}{q}\PY{o}{.}\PY{n}{put}\PY{p}{(}\PY{p}{\PYZob{}}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{end} \PY{o}{\PYZhy{}} \PY{n}{start}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{algoritmo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+            \PY{p}{\PYZcb{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Finalizado: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ en }\PY{l+s+si}{\PYZpc{}f}\PY{l+s+s2}{ }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{multiprocessing}\PY{o}{.}\PY{n}{current\PYZus{}process}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{name}\PY{p}{,} \PY{n}{end} \PY{o}{\PYZhy{}} \PY{n}{start}\PY{p}{)}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{lista}\PY{p}{)}
+        
+        
+        \PY{k}{def} \PY{n+nf}{process\PYZus{}2}\PY{p}{(}\PY{n}{lista}\PY{p}{,} \PY{n}{q}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Funcion para el proceso 2}
+        \PY{l+s+sd}{    :param lista: Lista de números a ordenar}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Empezando: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{multiprocessing}\PY{o}{.}\PY{n}{current\PYZus{}process}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{name}\PY{p}{)}
+            \PY{n}{start} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+            \PY{n}{Algoritmos}\PY{o}{.}\PY{n}{insertion\PYZus{}sort}\PY{p}{(}\PY{n}{lista}\PY{p}{)}
+            \PY{n}{end} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+            \PY{n}{q}\PY{o}{.}\PY{n}{put}\PY{p}{(}\PY{p}{\PYZob{}}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{end} \PY{o}{\PYZhy{}} \PY{n}{start}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{algoritmo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,}
+            \PY{p}{\PYZcb{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Finalizado: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ en }\PY{l+s+si}{\PYZpc{}f}\PY{l+s+s2}{ }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{multiprocessing}\PY{o}{.}\PY{n}{current\PYZus{}process}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{name}\PY{p}{,} \PY{n}{end} \PY{o}{\PYZhy{}} \PY{n}{start}\PY{p}{)}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{lista}\PY{p}{)}
+        
+        
+        \PY{k}{def} \PY{n+nf}{process\PYZus{}3}\PY{p}{(}\PY{n}{lista}\PY{p}{,} \PY{n}{q}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Empezando: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{multiprocessing}\PY{o}{.}\PY{n}{current\PYZus{}process}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{name}\PY{p}{)}
+            \PY{n}{start} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+            \PY{n}{lista} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{lista}\PY{p}{)}
+            \PY{n}{end} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+            \PY{n}{q}\PY{o}{.}\PY{n}{put}\PY{p}{(}\PY{p}{\PYZob{}}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{end} \PY{o}{\PYZhy{}} \PY{n}{start}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{algoritmo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,}
+            \PY{p}{\PYZcb{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Finalizado: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ en }\PY{l+s+si}{\PYZpc{}f}\PY{l+s+s2}{ }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{multiprocessing}\PY{o}{.}\PY{n}{current\PYZus{}process}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{name}\PY{p}{,} \PY{n}{end} \PY{o}{\PYZhy{}} \PY{n}{start}\PY{p}{)}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{lista}\PY{p}{)}
+        
+        
+        \PY{k}{def} \PY{n+nf}{main}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{k}{try}\PY{p}{:}
+                \PY{n}{size} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{input}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Introduce el tamaño de la lista: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+            \PY{k}{except} \PY{n+ne}{ValueError}\PY{p}{:}
+                \PY{n}{size} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10000}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{No has introducido un número, el tamaño de la lista será de: }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{size}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{lista} \PY{o}{=} \PY{p}{[}\PY{p}{]}  \PY{c+c1}{\PYZsh{} Para algoritmo minimos sucesivos}
+            \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{size}\PY{p}{)}\PY{p}{:}
+                \PY{n}{lista}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{lista\PYZus{}2} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{lista}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Para algoritmo ordenacion por insercion}
+            \PY{n}{lista\PYZus{}3} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{lista}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Para algoritmo ordenacion por insercion}
+        
+            \PY{n}{queue} \PY{o}{=} \PY{n}{multiprocessing}\PY{o}{.}\PY{n}{Queue}\PY{p}{(}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Cola para los resultados}
+        
+            \PY{n}{p1} \PY{o}{=} \PY{n}{multiprocessing}\PY{o}{.}\PY{n}{Process}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Minimos sucesivos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{target}\PY{o}{=}\PY{n}{process\PYZus{}1}\PY{p}{,} \PY{n}{args}\PY{o}{=}\PY{p}{(}\PY{n}{lista}\PY{p}{,} \PY{n}{queue}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{p2} \PY{o}{=} \PY{n}{multiprocessing}\PY{o}{.}\PY{n}{Process}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ordenacion por seleccion (Algoritmo inestable)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{target}\PY{o}{=}\PY{n}{process\PYZus{}2}\PY{p}{,}
+                                         \PY{n}{args}\PY{o}{=}\PY{p}{(}\PY{n}{lista\PYZus{}2}\PY{p}{,} \PY{n}{queue}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{p3} \PY{o}{=} \PY{n}{multiprocessing}\PY{o}{.}\PY{n}{Process}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ordenacion por Timsort}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{target}\PY{o}{=}\PY{n}{process\PYZus{}3}\PY{p}{,}
+                                         \PY{n}{args}\PY{o}{=}\PY{p}{(}\PY{n}{lista\PYZus{}3}\PY{p}{,} \PY{n}{queue}\PY{p}{)}\PY{p}{)}
+        
+            \PY{c+c1}{\PYZsh{} Iniciar procesos}
+            \PY{n}{p1}\PY{o}{.}\PY{n}{start}\PY{p}{(}\PY{p}{)}
+            \PY{n}{p2}\PY{o}{.}\PY{n}{start}\PY{p}{(}\PY{p}{)}
+            \PY{n}{p3}\PY{o}{.}\PY{n}{start}\PY{p}{(}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Espera hasta que el proceso haya terminado su trabajo}
+            \PY{n}{p1}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{)}
+            \PY{n}{p2}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{)}
+            \PY{n}{p3}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{)}
+        
+            \PY{n}{times} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{times}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{queue}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+            \PY{n}{times}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{queue}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+            \PY{n}{times}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{queue}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+            \PY{n}{times} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{times}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{k}\PY{p}{:} \PY{n}{k}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{algoritmo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Ordenamos la lista por algoritmo}
+        
+            \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{18}\PY{p}{]}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Eje x}
+            \PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{times}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{times}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{times}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Eje y}
+            \PY{n}{my\PYZus{}xticks} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Minimos sucesivos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ordenacion por seleccion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ordenacion por Timsort}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}  \PY{c+c1}{\PYZsh{} Nombres de los algoritmos}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{my\PYZus{}xticks}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Asociamos nombres de algoritmos a eje x}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Creamos el grafico}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Algoritmo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Titulo del eje x}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tiempo (segundos)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Titulo del eje y}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Mostramos el grafico}
+        
+        
+        \PY{k}{if} \PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZus{}\PYZus{}main\PYZus{}\PYZus{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+            \PY{n}{main}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Introduce el tamaño de la lista: 2000
+Empezando: Minimos sucesivos 
+
+Empezando: Ordenacion por Timsort 
+
+Finalizado: Ordenacion por Timsort en 0.000453 
+
+[1, 1, 2, 3, 3, 4, 4, 5, 7, 8, 8, 8, 8, 9, 10, 11, 11, 11, 12, 12, 13, 13, 14, 14, 14, 15, 15, 15, 16, 16, 16, 16, 16, 16, 18, 19, 19, 22, 22, 23, 23, 24, 24, 25, 25, 25, 25, 26, 26, 27, 27, 27, 27, 28, 29, 29, 30, 31, 31, 31, 31, 31, 32, 32, 32, 32, 32, 33, 34, 34, 35, 35, 35, 37, 37, 37, 38, 38, 39, 40, 40, 40, 41, 41, 42, 42, 43, 43, 44, 44, 45, 45, 46, 46, 46, 46, 47, 48, 48, 48, 49, 49, 50, 52, 52, 52, 53, 53, 53, 53, 54, 54, 55, 56, 56, 56, 57, 57, 58, 60, 61, 62, 62, 64, 64, 64, 64, 64, 65, 65, 67, 68, 68, 69, 69, 69, 70, 70, 71, 72, 72, 72, 72, 73, 74, 74, 75, 75, 75, 75, 75, 75, 75, 75, 76, 77, 77, 78, 79, 80, 81, 81, 82, 83, 83, 84, 84, 84, 86, 87, 87, 89, 89, 90, 90, 91, 92, 93, 94, 95, 95, 96, 96, 98, 98, 98, 99, 100, 100, 101, 103, 103, 103, 104, 105, 105, 105, 106, 106, 106, 107, 107, 108, 108, 109, 109, 109, 110, 110, 111, 112, 113, 115, 117, 119, 119, 119, 120, 120, 121, 122, 122, 122, 124, 124, 127, 127, 127, 128, 128, 129, 129, 129, 130, 130, 130, 130, 131, 131, 132, 132, 132, 132, 133, 133, 133, 133, 133, 134, 135, 135, 136, 138, 138, 139, 139, 140, 142, 142, 142, 142, 143, 143, 144, 144, 145, 145, 146, 146, 147, 148, 149, 149, 149, 150, 153, 153, 153, 153, 154, 154, 155, 156, 156, 156, 156, 157, 157, 158, 158, 159, 160, 160, 160, 160, 161, 162, 163, 163, 164, 164, 165, 167, 170, 170, 170, 170, 171, 171, 172, 172, 173, 173, 174, 175, 175, 177, 177, 177, 178, 179, 183, 184, 184, 185, 185, 187, 187, 187, 187, 188, 188, 189, 189, 189, 190, 190, 191, 192, 192, 192, 193, 193, 193, 194, 194, 195, 195, 196, 196, 199, 200, 200, 201, 201, 201, 202, 202, 202, 204, 204, 205, 205, 205, 206, 206, 207, 207, 208, 208, 209, 210, 210, 211, 212, 212, 213, 213, 213, 213, 213, 213, 213, 214, 214, 215, 215, 215, 215, 215, 215, 216, 216, 217, 217, 218, 218, 219, 220, 221, 221, 222, 223, 224, 224, 224, 225, 226, 227, 228, 229, 229, 229, 231, 231, 232, 232, 232, 232, 234, 235, 236, 236, 236, 236, 237, 238, 239, 239, 240, 241, 241, 242, 242, 244, 245, 246, 246, 246, 247, 247, 247, 247, 248, 248, 248, 248, 249, 249, 249, 251, 252, 253, 253, 253, 253, 254, 255, 255, 255, 257, 257, 258, 259, 260, 261, 263, 263, 264, 264, 264, 265, 266, 267, 267, 267, 267, 268, 268, 271, 271, 272, 272, 273, 273, 273, 274, 274, 274, 274, 275, 276, 276, 276, 277, 277, 277, 278, 278, 278, 279, 279, 280, 281, 282, 282, 284, 284, 285, 285, 285, 285, 287, 287, 287, 287, 288, 288, 288, 288, 289, 290, 291, 291, 292, 292, 292, 292, 293, 294, 294, 294, 296, 297, 297, 297, 298, 298, 298, 299, 299, 299, 299, 300, 300, 301, 301, 302, 302, 302, 302, 302, 303, 303, 303, 303, 304, 304, 304, 304, 305, 307, 307, 308, 308, 309, 309, 309, 310, 310, 311, 311, 312, 312, 312, 313, 313, 313, 314, 314, 316, 316, 316, 316, 317, 318, 318, 319, 319, 319, 321, 321, 321, 321, 321, 322, 322, 323, 323, 323, 324, 324, 325, 325, 326, 326, 326, 327, 327, 329, 329, 329, 332, 333, 333, 333, 334, 334, 335, 335, 335, 336, 336, 336, 336, 337, 337, 338, 339, 339, 339, 340, 340, 340, 341, 341, 342, 343, 343, 343, 343, 344, 344, 344, 344, 345, 346, 346, 348, 348, 348, 349, 350, 350, 350, 351, 351, 352, 353, 353, 353, 354, 354, 355, 355, 355, 356, 357, 357, 357, 357, 358, 358, 359, 359, 360, 360, 360, 361, 361, 361, 361, 362, 362, 362, 362, 363, 364, 364, 365, 366, 366, 366, 366, 368, 368, 368, 369, 369, 369, 371, 372, 372, 372, 372, 373, 374, 374, 375, 376, 376, 376, 376, 377, 377, 377, 379, 379, 380, 380, 380, 381, 383, 383, 383, 384, 384, 384, 384, 385, 385, 386, 387, 387, 388, 388, 390, 390, 390, 391, 391, 392, 392, 392, 394, 394, 395, 396, 396, 396, 397, 397, 398, 398, 398, 399, 399, 399, 400, 401, 402, 404, 404, 404, 406, 407, 407, 408, 408, 408, 408, 408, 408, 409, 410, 410, 411, 412, 412, 413, 413, 413, 414, 414, 414, 414, 415, 415, 416, 417, 417, 418, 418, 419, 420, 420, 421, 422, 422, 423, 423, 424, 424, 425, 425, 425, 425, 427, 428, 428, 428, 429, 429, 431, 432, 432, 432, 433, 434, 434, 434, 434, 434, 436, 437, 437, 437, 438, 439, 440, 441, 441, 442, 442, 442, 443, 443, 443, 444, 445, 446, 446, 446, 447, 447, 448, 449, 449, 450, 451, 451, 452, 452, 454, 454, 454, 454, 454, 456, 456, 457, 457, 457, 458, 458, 458, 459, 459, 459, 459, 460, 460, 461, 461, 461, 461, 461, 462, 462, 463, 464, 465, 465, 468, 468, 468, 468, 469, 469, 470, 470, 471, 472, 472, 472, 472, 473, 473, 474, 474, 474, 474, 475, 476, 476, 476, 477, 477, 477, 478, 478, 479, 480, 480, 480, 480, 482, 482, 482, 482, 482, 483, 484, 484, 484, 485, 485, 485, 485, 485, 486, 487, 487, 488, 488, 489, 490, 490, 490, 491, 491, 491, 491, 493, 494, 494, 495, 495, 496, 496, 496, 497, 498, 499, 499, 499, 500, 500, 500, 502, 502, 502, 503, 503, 503, 504, 504, 505, 506, 506, 507, 507, 507, 508, 508, 508, 510, 511, 512, 512, 513, 513, 513, 513, 514, 517, 517, 518, 518, 519, 521, 521, 521, 521, 521, 521, 521, 522, 523, 523, 523, 524, 524, 524, 524, 525, 525, 526, 526, 527, 528, 529, 529, 529, 530, 531, 532, 533, 534, 536, 537, 539, 541, 542, 544, 544, 544, 545, 545, 545, 545, 545, 546, 546, 547, 547, 548, 548, 548, 548, 549, 551, 551, 551, 552, 552, 553, 553, 553, 555, 555, 556, 556, 556, 557, 558, 558, 559, 559, 559, 560, 561, 562, 562, 562, 564, 564, 564, 565, 566, 566, 566, 567, 567, 567, 567, 567, 568, 568, 568, 568, 569, 569, 570, 571, 571, 571, 571, 571, 572, 572, 572, 573, 573, 574, 574, 575, 576, 576, 578, 578, 579, 579, 579, 579, 579, 580, 581, 581, 581, 582, 583, 583, 583, 584, 584, 584, 585, 585, 585, 585, 585, 586, 586, 586, 587, 587, 587, 588, 588, 588, 588, 588, 589, 589, 589, 589, 590, 591, 591, 591, 592, 592, 592, 593, 593, 593, 594, 594, 595, 595, 595, 596, 596, 596, 596, 597, 597, 597, 598, 598, 598, 598, 598, 600, 600, 601, 602, 602, 604, 604, 604, 604, 605, 606, 606, 607, 607, 607, 608, 608, 608, 608, 609, 609, 610, 610, 611, 611, 611, 612, 613, 613, 613, 613, 613, 614, 615, 616, 616, 616, 617, 617, 618, 618, 618, 619, 619, 621, 621, 621, 622, 622, 622, 622, 623, 623, 624, 624, 624, 625, 626, 626, 627, 627, 628, 629, 630, 630, 631, 631, 631, 632, 634, 634, 635, 636, 636, 636, 636, 637, 637, 638, 639, 640, 640, 640, 641, 641, 641, 641, 641, 641, 641, 641, 641, 642, 642, 642, 643, 643, 644, 644, 645, 645, 645, 645, 645, 646, 647, 647, 648, 649, 649, 650, 650, 650, 651, 651, 651, 652, 652, 652, 652, 653, 653, 653, 655, 655, 656, 656, 656, 656, 657, 657, 658, 659, 659, 659, 659, 661, 661, 661, 662, 662, 663, 663, 663, 663, 663, 664, 664, 664, 664, 664, 665, 665, 666, 667, 668, 669, 670, 671, 671, 673, 673, 674, 674, 674, 675, 675, 676, 676, 677, 677, 677, 677, 678, 679, 679, 680, 680, 680, 680, 681, 681, 681, 681, 682, 682, 683, 683, 683, 684, 685, 685, 685, 685, 685, 686, 686, 687, 687, 688, 688, 689, 690, 691, 692, 693, 693, 694, 694, 695, 696, 696, 697, 698, 698, 698, 700, 701, 701, 701, 702, 702, 703, 703, 703, 704, 704, 704, 704, 705, 705, 705, 705, 707, 707, 708, 708, 709, 709, 709, 710, 710, 710, 711, 711, 713, 713, 714, 714, 715, 715, 715, 715, 717, 717, 718, 718, 718, 719, 719, 720, 720, 720, 720, 720, 720, 721, 722, 723, 723, 723, 724, 725, 725, 725, 726, 726, 726, 727, 727, 727, 729, 729, 729, 730, 731, 731, 731, 732, 733, 734, 734, 736, 736, 736, 737, 737, 737, 738, 739, 740, 740, 740, 741, 741, 741, 742, 743, 744, 744, 744, 744, 745, 745, 746, 746, 746, 746, 746, 747, 747, 747, 748, 748, 748, 749, 749, 750, 750, 750, 752, 752, 753, 754, 754, 755, 755, 755, 756, 757, 758, 758, 759, 759, 759, 760, 760, 760, 761, 762, 763, 765, 765, 765, 765, 766, 767, 768, 768, 768, 768, 769, 769, 769, 769, 769, 770, 772, 772, 772, 773, 773, 773, 773, 774, 775, 775, 775, 775, 775, 776, 776, 777, 778, 778, 779, 780, 780, 781, 781, 781, 781, 782, 782, 782, 783, 784, 784, 785, 785, 785, 785, 786, 786, 786, 787, 787, 788, 788, 789, 789, 790, 790, 790, 791, 793, 793, 793, 793, 794, 795, 796, 796, 796, 797, 797, 797, 798, 798, 798, 799, 800, 800, 801, 802, 804, 804, 805, 805, 805, 806, 806, 808, 808, 809, 810, 812, 812, 813, 813, 813, 813, 814, 816, 816, 817, 817, 817, 819, 820, 821, 821, 822, 822, 823, 824, 825, 825, 825, 825, 826, 826, 826, 826, 826, 826, 827, 827, 827, 828, 828, 828, 829, 830, 830, 831, 831, 831, 831, 831, 832, 833, 833, 834, 835, 836, 836, 837, 837, 837, 838, 839, 839, 840, 841, 841, 841, 842, 842, 842, 842, 843, 844, 845, 846, 846, 846, 847, 851, 851, 852, 852, 853, 853, 853, 853, 855, 856, 856, 856, 857, 858, 858, 859, 859, 860, 860, 861, 862, 862, 862, 863, 864, 864, 864, 865, 865, 866, 866, 867, 867, 868, 868, 868, 868, 869, 869, 869, 870, 871, 871, 871, 873, 873, 874, 874, 874, 874, 875, 876, 877, 877, 878, 878, 879, 879, 879, 879, 879, 880, 881, 881, 881, 881, 881, 881, 883, 883, 883, 883, 883, 883, 884, 884, 885, 886, 886, 887, 887, 887, 888, 888, 888, 888, 889, 889, 889, 891, 892, 892, 892, 892, 893, 893, 893, 895, 895, 895, 895, 896, 896, 896, 897, 899, 899, 900, 900, 901, 902, 902, 902, 903, 904, 904, 905, 905, 905, 905, 906, 906, 906, 907, 908, 909, 910, 910, 910, 912, 912, 913, 913, 914, 915, 915, 915, 915, 917, 919, 920, 921, 921, 922, 922, 924, 925, 925, 925, 926, 926, 926, 926, 926, 926, 927, 927, 927, 927, 927, 928, 928, 929, 930, 930, 930, 931, 931, 932, 932, 933, 933, 933, 934, 934, 935, 935, 936, 937, 937, 937, 937, 937, 938, 938, 939, 939, 939, 939, 940, 940, 940, 942, 942, 942, 942, 943, 944, 944, 944, 945, 945, 946, 946, 947, 948, 949, 949, 949, 951, 951, 952, 952, 952, 954, 955, 956, 956, 957, 957, 957, 958, 958, 959, 959, 960, 961, 961, 961, 961, 962, 962, 962, 963, 964, 965, 966, 966, 966, 967, 967, 968, 970, 970, 971, 971, 972, 973, 973, 973, 974, 974, 975, 975, 978, 979, 979, 979, 979, 979, 980, 980, 981, 981, 981, 982, 983, 983, 983, 984, 984, 985, 985, 985, 986, 986, 986, 987, 987, 988, 988, 989, 989, 989, 989, 990, 991, 991, 991, 991, 992, 992, 992, 992, 992, 992, 993, 993, 993, 993, 994, 994, 995, 995, 996, 996, 996, 997, 997, 997, 997, 997, 998, 998, 998, 999, 1000, 1000]
+Empezando: Ordenacion por seleccion (Algoritmo inestable) 
+
+Finalizado: Ordenacion por seleccion (Algoritmo inestable) en 0.052893 
+
+[1, 1, 2, 3, 4, 4, 5, 7, 8, 8, 8, 8, 9, 10, 11, 11, 11, 12, 12, 13, 13, 14, 14, 14, 15, 15, 15, 16, 16, 16, 16, 16, 16, 18, 19, 19, 22, 22, 23, 23, 24, 24, 25, 25, 25, 25, 26, 26, 27, 27, 27, 27, 28, 29, 29, 30, 31, 31, 31, 31, 31, 32, 32, 32, 32, 32, 33, 34, 34, 35, 35, 35, 37, 37, 37, 38, 38, 39, 40, 40, 40, 41, 41, 42, 42, 43, 43, 44, 44, 45, 45, 46, 46, 46, 46, 47, 48, 48, 48, 49, 49, 50, 52, 52, 52, 53, 53, 53, 53, 54, 54, 55, 56, 56, 56, 57, 57, 58, 60, 61, 62, 62, 64, 64, 64, 64, 64, 65, 65, 67, 68, 68, 69, 69, 69, 70, 70, 71, 72, 72, 72, 72, 73, 74, 74, 75, 75, 75, 75, 75, 75, 75, 75, 76, 77, 77, 78, 79, 80, 81, 81, 82, 83, 83, 84, 84, 84, 86, 87, 87, 89, 89, 90, 90, 91, 92, 93, 94, 95, 95, 96, 96, 98, 98, 98, 99, 100, 100, 101, 103, 103, 103, 104, 105, 105, 105, 106, 106, 106, 107, 107, 108, 108, 109, 109, 109, 110, 110, 111, 112, 113, 115, 117, 119, 119, 119, 120, 120, 121, 122, 122, 122, 124, 124, 127, 127, 127, 128, 128, 129, 129, 129, 130, 130, 130, 130, 131, 131, 132, 132, 132, 132, 133, 133, 133, 133, 133, 134, 135, 135, 136, 138, 138, 139, 139, 140, 142, 142, 142, 142, 143, 143, 144, 144, 145, 145, 146, 146, 147, 148, 149, 149, 149, 150, 153, 153, 153, 153, 154, 154, 155, 156, 156, 156, 156, 157, 157, 158, 158, 159, 160, 160, 160, 160, 161, 162, 163, 163, 164, 164, 165, 167, 170, 170, 170, 170, 171, 171, 172, 172, 173, 173, 174, 175, 175, 177, 177, 177, 178, 179, 183, 184, 184, 185, 185, 187, 187, 187, 187, 188, 188, 189, 189, 189, 190, 190, 191, 192, 192, 192, 193, 193, 193, 194, 194, 195, 195, 196, 196, 199, 200, 200, 201, 201, 201, 202, 202, 202, 204, 204, 205, 205, 205, 206, 206, 207, 207, 208, 208, 209, 210, 210, 211, 212, 212, 213, 213, 213, 213, 213, 213, 213, 214, 214, 215, 215, 215, 215, 215, 215, 216, 216, 217, 217, 218, 218, 219, 220, 221, 221, 222, 223, 224, 224, 224, 225, 226, 227, 228, 229, 229, 229, 231, 231, 232, 232, 232, 232, 234, 235, 236, 236, 236, 236, 237, 238, 239, 239, 240, 241, 241, 242, 242, 244, 245, 246, 246, 246, 247, 247, 247, 247, 248, 248, 248, 248, 249, 249, 249, 251, 252, 253, 253, 253, 253, 254, 255, 255, 255, 257, 257, 258, 259, 260, 261, 263, 263, 264, 264, 264, 265, 266, 267, 267, 267, 267, 268, 268, 271, 271, 272, 272, 273, 273, 273, 274, 274, 274, 274, 275, 276, 276, 276, 277, 277, 277, 278, 278, 278, 279, 279, 280, 281, 282, 282, 284, 284, 285, 285, 285, 285, 287, 287, 287, 287, 288, 288, 288, 288, 289, 290, 291, 291, 292, 292, 292, 292, 293, 294, 294, 294, 296, 297, 297, 297, 298, 298, 298, 299, 299, 299, 299, 300, 300, 301, 301, 302, 302, 302, 302, 302, 303, 303, 303, 303, 304, 304, 304, 304, 305, 307, 307, 308, 308, 309, 309, 309, 310, 310, 311, 311, 312, 312, 312, 313, 313, 313, 314, 314, 316, 316, 316, 316, 317, 318, 318, 319, 319, 319, 321, 321, 321, 321, 321, 322, 322, 323, 323, 323, 324, 324, 325, 325, 326, 326, 326, 327, 327, 329, 329, 329, 332, 333, 333, 333, 334, 334, 335, 335, 335, 336, 336, 336, 336, 337, 337, 338, 339, 339, 339, 340, 340, 340, 341, 341, 342, 343, 343, 343, 343, 344, 344, 344, 344, 345, 346, 346, 348, 348, 348, 349, 350, 350, 350, 351, 351, 352, 353, 353, 353, 354, 354, 355, 355, 355, 356, 357, 357, 357, 357, 358, 358, 359, 359, 360, 360, 360, 361, 3, 361, 361, 361, 362, 362, 362, 362, 363, 364, 364, 365, 366, 366, 366, 366, 368, 368, 368, 369, 369, 369, 371, 372, 372, 372, 372, 373, 374, 374, 375, 376, 376, 376, 376, 377, 377, 377, 379, 379, 380, 380, 380, 381, 383, 383, 383, 384, 384, 384, 384, 385, 385, 386, 387, 387, 388, 388, 390, 390, 390, 391, 391, 392, 392, 392, 394, 394, 395, 396, 396, 396, 397, 397, 398, 398, 398, 399, 399, 399, 400, 401, 402, 404, 404, 404, 406, 407, 407, 408, 408, 408, 408, 408, 408, 409, 410, 410, 411, 412, 412, 413, 413, 413, 414, 414, 414, 414, 415, 415, 416, 417, 417, 418, 418, 419, 420, 420, 421, 422, 422, 423, 423, 424, 424, 425, 425, 425, 425, 427, 428, 428, 428, 429, 429, 431, 432, 432, 432, 433, 434, 434, 434, 434, 434, 436, 437, 437, 437, 438, 439, 440, 441, 441, 442, 442, 442, 443, 443, 443, 444, 445, 446, 446, 446, 447, 447, 448, 449, 449, 450, 451, 451, 452, 452, 454, 454, 454, 454, 454, 456, 456, 457, 457, 457, 458, 458, 458, 459, 459, 459, 459, 460, 460, 461, 461, 461, 461, 461, 462, 462, 463, 464, 465, 465, 468, 468, 468, 468, 469, 469, 470, 470, 471, 472, 472, 472, 472, 473, 473, 474, 474, 474, 474, 475, 476, 476, 476, 477, 477, 477, 478, 478, 479, 480, 480, 480, 480, 482, 482, 482, 482, 482, 483, 484, 484, 484, 485, 485, 485, 485, 485, 486, 487, 487, 488, 488, 489, 490, 490, 490, 491, 491, 491, 491, 493, 494, 494, 495, 495, 496, 496, 496, 497, 498, 499, 499, 499, 500, 500, 500, 502, 502, 502, 503, 503, 503, 504, 504, 505, 506, 506, 507, 507, 507, 508, 508, 508, 510, 511, 512, 512, 513, 513, 513, 513, 514, 517, 517, 518, 518, 519, 521, 521, 521, 521, 521, 521, 521, 522, 523, 523, 523, 524, 524, 524, 524, 525, 525, 526, 526, 527, 528, 529, 529, 529, 530, 531, 532, 533, 534, 536, 537, 539, 541, 542, 544, 544, 544, 545, 545, 545, 545, 545, 546, 546, 547, 547, 548, 548, 548, 548, 549, 551, 551, 551, 552, 552, 553, 553, 553, 555, 555, 556, 556, 556, 557, 558, 558, 559, 559, 559, 560, 561, 562, 562, 562, 564, 564, 564, 565, 566, 566, 566, 567, 567, 567, 567, 567, 568, 568, 568, 568, 569, 569, 570, 571, 571, 571, 571, 571, 572, 572, 572, 573, 573, 574, 574, 575, 576, 576, 578, 578, 579, 579, 579, 579, 579, 580, 581, 581, 581, 582, 583, 583, 583, 584, 584, 584, 585, 585, 585, 585, 585, 586, 586, 586, 587, 587, 587, 588, 588, 588, 588, 588, 589, 589, 589, 589, 590, 591, 591, 591, 592, 592, 592, 593, 593, 593, 594, 594, 595, 595, 595, 596, 596, 596, 596, 597, 597, 597, 598, 598, 598, 598, 598, 600, 600, 601, 602, 602, 604, 604, 604, 604, 605, 606, 606, 607, 607, 607, 608, 608, 608, 608, 609, 609, 610, 610, 611, 611, 611, 612, 613, 613, 613, 613, 613, 614, 615, 616, 616, 616, 617, 617, 618, 618, 618, 619, 619, 621, 621, 621, 622, 622, 622, 622, 623, 623, 624, 624, 624, 625, 626, 626, 627, 627, 628, 629, 630, 630, 631, 631, 631, 632, 634, 634, 635, 636, 636, 636, 636, 637, 637, 638, 639, 640, 640, 640, 641, 641, 641, 641, 641, 641, 641, 641, 641, 642, 642, 642, 643, 643, 644, 644, 645, 645, 645, 645, 645, 646, 647, 647, 648, 649, 649, 650, 650, 650, 651, 651, 651, 652, 652, 652, 652, 653, 653, 653, 655, 655, 656, 656, 656, 656, 657, 657, 658, 659, 659, 659, 659, 661, 661, 661, 662, 662, 663, 663, 663, 663, 663, 664, 664, 664, 664, 664, 665, 665, 666, 667, 668, 669, 670, 671, 671, 673, 673, 674, 674, 674, 675, 675, 676, 676, 677, 677, 677, 677, 678, 679, 679, 680, 680, 680, 680, 681, 681, 681, 681, 682, 682, 683, 683, 683, 684, 685, 685, 685, 685, 685, 686, 686, 687, 687, 688, 688, 689, 690, 691, 692, 693, 693, 694, 694, 695, 696, 696, 697, 698, 698, 698, 700, 701, 701, 701, 702, 702, 703, 703, 703, 704, 704, 704, 704, 705, 705, 705, 705, 707, 707, 708, 708, 709, 709, 709, 710, 710, 710, 711, 711, 713, 713, 714, 714, 715, 715, 715, 715, 717, 717, 718, 718, 718, 719, 719, 720, 720, 720, 720, 720, 720, 721, 722, 723, 723, 723, 724, 725, 725, 725, 726, 726, 726, 727, 727, 727, 729, 729, 729, 730, 731, 731, 731, 732, 733, 734, 734, 736, 736, 736, 737, 737, 737, 738, 739, 740, 740, 740, 741, 741, 741, 742, 743, 744, 744, 744, 744, 745, 745, 746, 746, 746, 746, 746, 747, 747, 747, 748, 748, 748, 749, 749, 750, 750, 750, 752, 752, 753, 754, 754, 755, 755, 755, 756, 757, 758, 758, 759, 759, 759, 760, 760, 760, 761, 762, 763, 765, 765, 765, 765, 766, 767, 768, 768, 768, 768, 769, 769, 769, 769, 769, 770, 772, 772, 772, 773, 773, 773, 773, 774, 775, 775, 775, 775, 775, 776, 776, 777, 778, 778, 779, 780, 780, 781, 781, 781, 781, 782, 782, 782, 783, 784, 784, 785, 785, 785, 785, 786, 786, 786, 787, 787, 788, 788, 789, 789, 790, 790, 790, 791, 793, 793, 793, 793, 794, 795, 796, 796, 796, 797, 797, 797, 798, 798, 798, 799, 800, 800, 801, 802, 804, 804, 805, 805, 805, 806, 806, 808, 808, 809, 810, 812, 812, 813, 813, 813, 813, 814, 816, 816, 817, 817, 817, 819, 820, 821, 821, 822, 822, 823, 824, 825, 825, 825, 825, 826, 826, 826, 826, 826, 826, 827, 827, 827, 828, 828, 828, 829, 830, 830, 831, 831, 831, 831, 831, 832, 833, 833, 834, 835, 836, 836, 837, 837, 837, 838, 839, 839, 840, 841, 841, 841, 842, 842, 842, 842, 843, 844, 845, 846, 846, 846, 847, 851, 851, 852, 852, 853, 853, 853, 853, 855, 856, 856, 856, 857, 858, 858, 859, 859, 860, 860, 861, 862, 862, 862, 863, 864, 864, 864, 865, 865, 866, 866, 867, 867, 868, 868, 868, 868, 869, 869, 869, 870, 871, 871, 871, 873, 873, 874, 874, 874, 874, 875, 876, 877, 877, 878, 878, 879, 879, 879, 879, 879, 880, 881, 881, 881, 881, 881, 881, 883, 883, 883, 883, 883, 883, 884, 884, 885, 886, 886, 887, 887, 887, 888, 888, 888, 888, 889, 889, 889, 891, 892, 892, 892, 892, 893, 893, 893, 895, 895, 895, 895, 896, 896, 896, 897, 899, 899, 900, 900, 901, 902, 902, 902, 903, 904, 904, 905, 905, 905, 905, 906, 906, 906, 907, 908, 909, 910, 910, 910, 912, 912, 913, 913, 914, 915, 915, 915, 915, 917, 919, 920, 921, 921, 922, 922, 924, 925, 925, 925, 926, 926, 926, 926, 926, 926, 927, 927, 927, 927, 927, 928, 928, 929, 930, 930, 930, 931, 931, 932, 932, 933, 933, 933, 934, 934, 935, 935, 936, 937, 937, 937, 937, 937, 938, 938, 939, 939, 939, 939, 940, 940, 940, 942, 942, 942, 942, 943, 944, 944, 944, 945, 945, 946, 946, 947, 948, 949, 949, 949, 951, 951, 952, 952, 952, 954, 955, 956, 956, 957, 957, 957, 958, 958, 959, 959, 960, 961, 961, 961, 961, 962, 962, 962, 963, 964, 965, 966, 966, 966, 967, 967, 968, 970, 970, 971, 971, 972, 973, 973, 973, 974, 974, 975, 975, 978, 979, 979, 979, 979, 979, 980, 980, 981, 981, 981, 982, 983, 983, 983, 984, 984, 985, 985, 985, 986, 986, 986, 987, 987, 988, 988, 989, 989, 989, 989, 990, 991, 991, 991, 991, 992, 992, 992, 992, 992, 992, 993, 993, 993, 993, 994, 994, 995, 995, 996, 996, 996, 997, 997, 997, 997, 997, 998, 998, 998, 999, 1000, 1000]
+Finalizado: Minimos sucesivos en 0.219540 
+
+[1, 1, 2, 3, 3, 4, 4, 5, 7, 8, 8, 8, 8, 9, 10, 11, 11, 11, 12, 12, 13, 13, 14, 14, 14, 15, 15, 15, 16, 16, 16, 16, 16, 16, 18, 19, 19, 22, 22, 23, 23, 24, 24, 25, 25, 25, 25, 26, 26, 27, 27, 27, 27, 28, 29, 29, 30, 31, 31, 31, 31, 31, 32, 32, 32, 32, 32, 33, 34, 34, 35, 35, 35, 37, 37, 37, 38, 38, 39, 40, 40, 40, 41, 41, 42, 42, 43, 43, 44, 44, 45, 45, 46, 46, 46, 46, 47, 48, 48, 48, 49, 49, 50, 52, 52, 52, 53, 53, 53, 53, 54, 54, 55, 56, 56, 56, 57, 57, 58, 60, 61, 62, 62, 64, 64, 64, 64, 64, 65, 65, 67, 68, 68, 69, 69, 69, 70, 70, 71, 72, 72, 72, 72, 73, 74, 74, 75, 75, 75, 75, 75, 75, 75, 75, 76, 77, 77, 78, 79, 80, 81, 81, 82, 83, 83, 84, 84, 84, 86, 87, 87, 89, 89, 90, 90, 91, 92, 93, 94, 95, 95, 96, 96, 98, 98, 98, 99, 100, 100, 101, 103, 103, 103, 104, 105, 105, 105, 106, 106, 106, 107, 107, 108, 108, 109, 109, 109, 110, 110, 111, 112, 113, 115, 117, 119, 119, 119, 120, 120, 121, 122, 122, 122, 124, 124, 127, 127, 127, 128, 128, 129, 129, 129, 130, 130, 130, 130, 131, 131, 132, 132, 132, 132, 133, 133, 133, 133, 133, 134, 135, 135, 136, 138, 138, 139, 139, 140, 142, 142, 142, 142, 143, 143, 144, 144, 145, 145, 146, 146, 147, 148, 149, 149, 149, 150, 153, 153, 153, 153, 154, 154, 155, 156, 156, 156, 156, 157, 157, 158, 158, 159, 160, 160, 160, 160, 161, 162, 163, 163, 164, 164, 165, 167, 170, 170, 170, 170, 171, 171, 172, 172, 173, 173, 174, 175, 175, 177, 177, 177, 178, 179, 183, 184, 184, 185, 185, 187, 187, 187, 187, 188, 188, 189, 189, 189, 190, 190, 191, 192, 192, 192, 193, 193, 193, 194, 194, 195, 195, 196, 196, 199, 200, 200, 201, 201, 201, 202, 202, 202, 204, 204, 205, 205, 205, 206, 206, 207, 207, 208, 208, 209, 210, 210, 211, 212, 212, 213, 213, 213, 213, 213, 213, 213, 214, 214, 215, 215, 215, 215, 215, 215, 216, 216, 217, 217, 218, 218, 219, 220, 221, 221, 222, 223, 224, 224, 224, 225, 226, 227, 228, 229, 229, 229, 231, 231, 232, 232, 232, 232, 234, 235, 236, 236, 236, 236, 237, 238, 239, 239, 240, 241, 241, 242, 242, 244, 245, 246, 246, 246, 247, 247, 247, 247, 248, 248, 248, 248, 249, 249, 249, 251, 252, 253, 253, 253, 253, 254, 255, 255, 255, 257, 257, 258, 259, 260, 261, 263, 263, 264, 264, 264, 265, 266, 267, 267, 267, 267, 268, 268, 271, 271, 272, 272, 273, 273, 273, 274, 274, 274, 274, 275, 276, 276, 276, 277, 277, 277, 278, 278, 278, 279, 279, 280, 281, 282, 282, 284, 284, 285, 285, 285, 285, 287, 287, 287, 287, 288, 288, 288, 288, 289, 290, 291, 291, 292, 292, 292, 292, 293, 294, 294, 294, 296, 297, 297, 297, 298, 298, 298, 299, 299, 299, 299, 300, 300, 301, 301, 302, 302, 302, 302, 302, 303, 303, 303, 303, 304, 304, 304, 304, 305, 307, 307, 308, 308, 309, 309, 309, 310, 310, 311, 311, 312, 312, 312, 313, 313, 313, 314, 314, 316, 316, 316, 316, 317, 318, 318, 319, 319, 319, 321, 321, 321, 321, 321, 322, 322, 323, 323, 323, 324, 324, 325, 325, 326, 326, 326, 327, 327, 329, 329, 329, 332, 333, 333, 333, 334, 334, 335, 335, 335, 336, 336, 336, 336, 337, 337, 338, 339, 339, 339, 340, 340, 340, 341, 341, 342, 343, 343, 343, 343, 344, 344, 344, 344, 345, 346, 346, 348, 348, 348, 349, 350, 350, 350, 351, 351, 352, 353, 353, 353, 354, 354, 355, 355, 355, 356, 357, 357, 357, 357, 358, 358, 359, 359, 360, 360, 360, 361, 361, 361, 361, 362, 362, 362, 362, 363, 364, 364, 365, 366, 366, 366, 366, 368, 368, 368, 369, 369, 369, 371, 372, 372, 372, 372, 373, 374, 374, 375, 376, 376, 376, 376, 377, 377, 377, 379, 379, 380, 380, 380, 381, 383, 383, 383, 384, 384, 384, 384, 385, 385, 386, 387, 387, 388, 388, 390, 390, 390, 391, 391, 392, 392, 392, 394, 394, 395, 396, 396, 396, 397, 397, 398, 398, 398, 399, 399, 399, 400, 401, 402, 404, 404, 404, 406, 407, 407, 408, 408, 408, 408, 408, 408, 409, 410, 410, 411, 412, 412, 413, 413, 413, 414, 414, 414, 414, 415, 415, 416, 417, 417, 418, 418, 419, 420, 420, 421, 422, 422, 423, 423, 424, 424, 425, 425, 425, 425, 427, 428, 428, 428, 429, 429, 431, 432, 432, 432, 433, 434, 434, 434, 434, 434, 436, 437, 437, 437, 438, 439, 440, 441, 441, 442, 442, 442, 443, 443, 443, 444, 445, 446, 446, 446, 447, 447, 448, 449, 449, 450, 451, 451, 452, 452, 454, 454, 454, 454, 454, 456, 456, 457, 457, 457, 458, 458, 458, 459, 459, 459, 459, 460, 460, 461, 461, 461, 461, 461, 462, 462, 463, 464, 465, 465, 468, 468, 468, 468, 469, 469, 470, 470, 471, 472, 472, 472, 472, 473, 473, 474, 474, 474, 474, 475, 476, 476, 476, 477, 477, 477, 478, 478, 479, 480, 480, 480, 480, 482, 482, 482, 482, 482, 483, 484, 484, 484, 485, 485, 485, 485, 485, 486, 487, 487, 488, 488, 489, 490, 490, 490, 491, 491, 491, 491, 493, 494, 494, 495, 495, 496, 496, 496, 497, 498, 499, 499, 499, 500, 500, 500, 502, 502, 502, 503, 503, 503, 504, 504, 505, 506, 506, 507, 507, 507, 508, 508, 508, 510, 511, 512, 512, 513, 513, 513, 513, 514, 517, 517, 518, 518, 519, 521, 521, 521, 521, 521, 521, 521, 522, 523, 523, 523, 524, 524, 524, 524, 525, 525, 526, 526, 527, 528, 529, 529, 529, 530, 531, 532, 533, 534, 536, 537, 539, 541, 542, 544, 544, 544, 545, 545, 545, 545, 545, 546, 546, 547, 547, 548, 548, 548, 548, 549, 551, 551, 551, 552, 552, 553, 553, 553, 555, 555, 556, 556, 556, 557, 558, 558, 559, 559, 559, 560, 561, 562, 562, 562, 564, 564, 564, 565, 566, 566, 566, 567, 567, 567, 567, 567, 568, 568, 568, 568, 569, 569, 570, 571, 571, 571, 571, 571, 572, 572, 572, 573, 573, 574, 574, 575, 576, 576, 578, 578, 579, 579, 579, 579, 579, 580, 581, 581, 581, 582, 583, 583, 583, 584, 584, 584, 585, 585, 585, 585, 585, 586, 586, 586, 587, 587, 587, 588, 588, 588, 588, 588, 589, 589, 589, 589, 590, 591, 591, 591, 592, 592, 592, 593, 593, 593, 594, 594, 595, 595, 595, 596, 596, 596, 596, 597, 597, 597, 598, 598, 598, 598, 598, 600, 600, 601, 602, 602, 604, 604, 604, 604, 605, 606, 606, 607, 607, 607, 608, 608, 608, 608, 609, 609, 610, 610, 611, 611, 611, 612, 613, 613, 613, 613, 613, 614, 615, 616, 616, 616, 617, 617, 618, 618, 618, 619, 619, 621, 621, 621, 622, 622, 622, 622, 623, 623, 624, 624, 624, 625, 626, 626, 627, 627, 628, 629, 630, 630, 631, 631, 631, 632, 634, 634, 635, 636, 636, 636, 636, 637, 637, 638, 639, 640, 640, 640, 641, 641, 641, 641, 641, 641, 641, 641, 641, 642, 642, 642, 643, 643, 644, 644, 645, 645, 645, 645, 645, 646, 647, 647, 648, 649, 649, 650, 650, 650, 651, 651, 651, 652, 652, 652, 652, 653, 653, 653, 655, 655, 656, 656, 656, 656, 657, 657, 658, 659, 659, 659, 659, 661, 661, 661, 662, 662, 663, 663, 663, 663, 663, 664, 664, 664, 664, 664, 665, 665, 666, 667, 668, 669, 670, 671, 671, 673, 673, 674, 674, 674, 675, 675, 676, 676, 677, 677, 677, 677, 678, 679, 679, 680, 680, 680, 680, 681, 681, 681, 681, 682, 682, 683, 683, 683, 684, 685, 685, 685, 685, 685, 686, 686, 687, 687, 688, 688, 689, 690, 691, 692, 693, 693, 694, 694, 695, 696, 696, 697, 698, 698, 698, 700, 701, 701, 701, 702, 702, 703, 703, 703, 704, 704, 704, 704, 705, 705, 705, 705, 707, 707, 708, 708, 709, 709, 709, 710, 710, 710, 711, 711, 713, 713, 714, 714, 715, 715, 715, 715, 717, 717, 718, 718, 718, 719, 719, 720, 720, 720, 720, 720, 720, 721, 722, 723, 723, 723, 724, 725, 725, 725, 726, 726, 726, 727, 727, 727, 729, 729, 729, 730, 731, 731, 731, 732, 733, 734, 734, 736, 736, 736, 737, 737, 737, 738, 739, 740, 740, 740, 741, 741, 741, 742, 743, 744, 744, 744, 744, 745, 745, 746, 746, 746, 746, 746, 747, 747, 747, 748, 748, 748, 749, 749, 750, 750, 750, 752, 752, 753, 754, 754, 755, 755, 755, 756, 757, 758, 758, 759, 759, 759, 760, 760, 760, 761, 762, 763, 765, 765, 765, 765, 766, 767, 768, 768, 768, 768, 769, 769, 769, 769, 769, 770, 772, 772, 772, 773, 773, 773, 773, 774, 775, 775, 775, 775, 775, 776, 776, 777, 778, 778, 779, 780, 780, 781, 781, 781, 781, 782, 782, 782, 783, 784, 784, 785, 785, 785, 785, 786, 786, 786, 787, 787, 788, 788, 789, 789, 790, 790, 790, 791, 793, 793, 793, 793, 794, 795, 796, 796, 796, 797, 797, 797, 798, 798, 798, 799, 800, 800, 801, 802, 804, 804, 805, 805, 805, 806, 806, 808, 808, 809, 810, 812, 812, 813, 813, 813, 813, 814, 816, 816, 817, 817, 817, 819, 820, 821, 821, 822, 822, 823, 824, 825, 825, 825, 825, 826, 826, 826, 826, 826, 826, 827, 827, 827, 828, 828, 828, 829, 830, 830, 831, 831, 831, 831, 831, 832, 833, 833, 834, 835, 836, 836, 837, 837, 837, 838, 839, 839, 840, 841, 841, 841, 842, 842, 842, 842, 843, 844, 845, 846, 846, 846, 847, 851, 851, 852, 852, 853, 853, 853, 853, 855, 856, 856, 856, 857, 858, 858, 859, 859, 860, 860, 861, 862, 862, 862, 863, 864, 864, 864, 865, 865, 866, 866, 867, 867, 868, 868, 868, 868, 869, 869, 869, 870, 871, 871, 871, 873, 873, 874, 874, 874, 874, 875, 876, 877, 877, 878, 878, 879, 879, 879, 879, 879, 880, 881, 881, 881, 881, 881, 881, 883, 883, 883, 883, 883, 883, 884, 884, 885, 886, 886, 887, 887, 887, 888, 888, 888, 888, 889, 889, 889, 891, 892, 892, 892, 892, 893, 893, 893, 895, 895, 895, 895, 896, 896, 896, 897, 899, 899, 900, 900, 901, 902, 902, 902, 903, 904, 904, 905, 905, 905, 905, 906, 906, 906, 907, 908, 909, 910, 910, 910, 912, 912, 913, 913, 914, 915, 915, 915, 915, 917, 919, 920, 921, 921, 922, 922, 924, 925, 925, 925, 926, 926, 926, 926, 926, 926, 927, 927, 927, 927, 927, 928, 928, 929, 930, 930, 930, 931, 931, 932, 932, 933, 933, 933, 934, 934, 935, 935, 936, 937, 937, 937, 937, 937, 938, 938, 939, 939, 939, 939, 940, 940, 940, 942, 942, 942, 942, 943, 944, 944, 944, 945, 945, 946, 946, 947, 948, 949, 949, 949, 951, 951, 952, 952, 952, 954, 955, 956, 956, 957, 957, 957, 958, 958, 959, 959, 960, 961, 961, 961, 961, 962, 962, 962, 963, 964, 965, 966, 966, 966, 967, 967, 968, 970, 970, 971, 971, 972, 973, 973, 973, 974, 974, 975, 975, 978, 979, 979, 979, 979, 979, 980, 980, 981, 981, 981, 982, 983, 983, 983, 984, 984, 985, 985, 985, 986, 986, 986, 987, 987, 988, 988, 989, 989, 989, 989, 990, 991, 991, 991, 991, 992, 992, 992, 992, 992, 992, 993, 993, 993, 993, 994, 994, 995, 995, 996, 996, 996, 997, 997, 997, 997, 997, 998, 998, 998, 999, 1000, 1000]
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_2_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
